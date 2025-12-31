@@ -1,26 +1,24 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.router import api_router
-app = FastAPI(title="My API")
+from app.core.settings import API_PREFIX, APP_NAME, VERSION, PORT,CORS_ORIGINS
 
-# הגדרת CORS (אופציונלי)
+from app.api.router import api_router
+app = FastAPI(
+    title=APP_NAME,
+    version=VERSION,
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 @app.get("/")
 async def root():
     return {"message": "Hello from Cloud Run!"}
 
-
-# app = FastAPI(
-#     title=APP_NAME,
-#     version=VERSION,
-# )
 
 app.include_router(api_router, prefix="/dev")
 # @app.get("/health")
