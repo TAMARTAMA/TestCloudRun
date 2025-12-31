@@ -1,2 +1,6 @@
 app/.env --invert-paths
 .env
+.gitignore
+tests/
+__pycache__
+*.pyc
