@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.settings import API_PREFIX, APP_NAME, VERSION, PORT,CORS_ORIGINS
-
 from app.api.router import api_router
+
 app = FastAPI(
     title=APP_NAME,
     version=VERSION,
@@ -10,17 +10,18 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=CORS_ORIGINS,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 @app.get("/")
 async def root():
     return {"message": "Hello from Cloud Run!"}
 
 
-app.include_router(api_router, prefix="/dev")
+app.include_router(api_router, prefix=API_PREFIX)
 # @app.get("/health")
 # async def health_check():
 #     return {"status": "healthy"}
