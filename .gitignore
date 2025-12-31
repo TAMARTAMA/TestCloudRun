@@ -1,0 +1,2 @@
+app/.env --invert-paths
+.env
